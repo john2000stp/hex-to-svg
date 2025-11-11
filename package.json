@@ -1,10 +1,10 @@
 {
   "name": "@john2000stp/hex-to-svg",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "description": "Generate a 10x10 SVG with a specified hex color",
+  "description": "Generate customizable SVG images from hex color values with flexible dimensions",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {

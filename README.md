@@ -1,6 +1,6 @@
 # hex-to-svg
 
-A lightweight, zero-dependency npm package that generates 10x10 SVG images from hex color values.
+A lightweight, zero-dependency npm package that generates SVG images from hex color values with customizable dimensions.
 
 [![npm version](https://img.shields.io/npm/v/hex-to-svg.svg)](https://www.npmjs.com/package/hex-to-svg)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
@@ -11,6 +11,7 @@ A lightweight, zero-dependency npm package that generates 10x10 SVG images from 
 - **Simple API**: One function, does exactly what you need
 - **Flexible Input**: Accepts hex colors with or without `#` prefix
 - **Format Support**: Works with both 3-digit (`#F0F`) and 6-digit (`#FF00FF`) hex formats
+- **Customizable**: Set custom dimensions or use the default 100x100
 - **Type Safe**: Includes TypeScript type definitions
 - **Validated**: Built-in hex color validation with helpful error messages
 
@@ -44,14 +45,15 @@ If you haven't used GitHub Packages before:
 ```javascript
 const hexToSvg = require('@john2000stp/hex-to-svg');
 
+// Default 100x100
 const svg = hexToSvg('#FF5733');
 console.log(svg);
 ```
 
 Output:
 ```xml
-<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  <rect width="10" height="10" fill="#FF5733" />
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#FF5733" />
 </svg>
 ```
 
@@ -62,17 +64,42 @@ Output:
 ```javascript
 const hexToSvg = require('@john2000stp/hex-to-svg');
 
-// With # prefix
+// Default 100x100
 const svg1 = hexToSvg('#FF5733');
 
+// With # prefix
+const svg2 = hexToSvg('#00BFFF');
+
 // Without # prefix (automatically added)
-const svg2 = hexToSvg('00BFFF');
+const svg3 = hexToSvg('00BFFF');
 
 // Short hex format (3 digits)
-const svg3 = hexToSvg('#F0F');
+const svg4 = hexToSvg('#F0F');
 
 // Lowercase works too
-const svg4 = hexToSvg('#ff5733');
+const svg5 = hexToSvg('#ff5733');
+```
+
+### Custom Dimensions
+
+```javascript
+const hexToSvg = require('@john2000stp/hex-to-svg');
+
+// Square using size option
+const svg1 = hexToSvg('#FF5733', { size: 200 });
+// <svg width="200" height="200" ...>
+
+// Custom width and height
+const svg2 = hexToSvg('#00BFFF', { width: 300, height: 150 });
+// <svg width="300" height="150" ...>
+
+// Size overrides width/height if both provided
+const svg3 = hexToSvg('#F0F', { width: 100, height: 100, size: 250 });
+// <svg width="250" height="250" ...>
+
+// Backwards compatible - small 10x10 SVG
+const svg4 = hexToSvg('#FF5733', { size: 10 });
+// <svg width="10" height="10" ...>
 ```
 
 ### Save to File
@@ -137,13 +164,22 @@ try {
 
 ```typescript
 import hexToSvg = require('@john2000stp/hex-to-svg');
+import type { HexToSvgOptions } from '@john2000stp/hex-to-svg';
 
-const svg: string = hexToSvg('#FF5733');
+// Default size
+const svg1: string = hexToSvg('#FF5733');
+
+// With custom dimensions
+const svg2: string = hexToSvg('#00BFFF', { size: 200 });
+
+// With custom width and height
+const options: HexToSvgOptions = { width: 300, height: 150 };
+const svg3: string = hexToSvg('#F0F', options);
 
 // With error handling
-function generateColorSvg(color: string): string {
+function generateColorSvg(color: string, options?: HexToSvgOptions): string {
   try {
-    return hexToSvg(color);
+    return hexToSvg(color, options);
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(`Failed to generate SVG: ${error.message}`);
@@ -175,29 +211,39 @@ Object.entries(palette).forEach(([name, color]) => {
 
 ## API Reference
 
-### `hexToSvg(hexColor: string): string`
+### `hexToSvg(hexColor: string, options?: HexToSvgOptions): string`
 
-Generates a 10x10 SVG rectangle with the specified hex color.
+Generates an SVG rectangle with the specified hex color and optional dimensions.
 
 #### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `hexColor` | `string` | Hex color value in format `#RRGGBB`, `RRGGBB`, `#RGB`, or `RGB` |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `hexColor` | `string` | Yes | Hex color value in format `#RRGGBB`, `RRGGBB`, `#RGB`, or `RGB` |
+| `options` | `HexToSvgOptions` | No | Optional configuration for SVG dimensions |
+
+#### HexToSvgOptions
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `width` | `number` | `100` | Width of the SVG in pixels |
+| `height` | `number` | `100` | Height of the SVG in pixels |
+| `size` | `number` | - | Sets both width and height (overrides width/height if provided) |
 
 #### Returns
 
 | Type | Description |
 |------|-------------|
-| `string` | SVG markup as a string with width and height of 10 pixels |
+| `string` | SVG markup as a string with the specified dimensions |
 
 #### Throws
 
 | Error | Condition |
 |-------|-----------|
 | `Error` | When the hex color format is invalid |
+| `Error` | When width or height is not a positive number |
 
-#### Valid Input Formats
+#### Valid Hex Color Formats
 
 - `#FF5733` - 6-digit hex with hash
 - `FF5733` - 6-digit hex without hash
@@ -205,25 +251,32 @@ Generates a 10x10 SVG rectangle with the specified hex color.
 - `F0F` - 3-digit hex without hash
 - Case insensitive: `#ff5733` and `#FF5733` both work
 
-#### Invalid Input Examples
+#### Invalid Inputs
 
+**Invalid Hex Colors:**
 - `GGGGGG` - Invalid hex characters
 - `#12345` - Wrong length (must be 3 or 6)
 - `#1234567` - Too many digits
 - Empty string
 - `rgb(255, 87, 51)` - Not a hex format
 
+**Invalid Dimensions:**
+- Negative numbers: `{ width: -10 }`
+- Zero: `{ height: 0 }`
+- Non-numbers: `{ size: "100" }`
+- Infinity or NaN
+
 ## SVG Output Format
 
 The generated SVG follows this structure:
 
 ```xml
-<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  <rect width="10" height="10" fill="[YOUR_COLOR]" />
+<svg width="[WIDTH]" height="[HEIGHT]" xmlns="http://www.w3.org/2000/svg">
+  <rect width="[WIDTH]" height="[HEIGHT]" fill="[YOUR_COLOR]" />
 </svg>
 ```
 
-- **Dimensions**: 10x10 pixels
+- **Dimensions**: Customizable (default: 100x100 pixels)
 - **Namespace**: Standard SVG namespace
 - **Elements**: Single `<rect>` element filling entire canvas
 - **Color**: Applied via the `fill` attribute

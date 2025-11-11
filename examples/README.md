@@ -20,7 +20,27 @@ node basic-usage.js
 
 ---
 
-### 2. Save to File (`save-to-file.js`)
+### 2. Custom Dimensions (`custom-dimensions.js`)
+
+Shows how to create SVGs with custom sizes and dimensions.
+
+```bash
+node custom-dimensions.js
+```
+
+**What it shows:**
+- Default 100x100 size
+- Square SVGs using size option
+- Custom width and height
+- Various sizes (icons, banners, large images)
+- Backwards compatibility with 10x10
+- Size option overriding width/height
+
+**Output:** Creates files in `examples/output/`
+
+---
+
+### 3. Save to File (`save-to-file.js`)
 
 Shows how to generate and save SVG files to disk.
 
@@ -38,7 +58,7 @@ node save-to-file.js
 
 ---
 
-### 3. Error Handling (`error-handling.js`)
+### 4. Error Handling (`error-handling.js`)
 
 Demonstrates proper error handling for invalid inputs.
 
@@ -54,7 +74,7 @@ node error-handling.js
 
 ---
 
-### 4. Color Palette Generator (`color-palette.js`)
+### 5. Color Palette Generator (`color-palette.js`)
 
 Generates a complete design system color palette.
 
@@ -72,7 +92,7 @@ node color-palette.js
 
 ---
 
-### 5. Express.js Server (`express-server.js`)
+### 6. Express.js Server (`express-server.js`)
 
 A complete Express.js server that serves SVG images via HTTP.
 
