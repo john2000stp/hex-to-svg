@@ -1,0 +1,15 @@
+# Test files
+test.js
+
+# Examples
+examples/
+
+# Development files
+.gitignore
+.DS_Store
+
+# Output directories
+output/
+
+# Git
+.git/

@@ -1,0 +1,31 @@
+{
+  "name": "hex-to-svg",
+  "version": "1.0.0",
+  "description": "Generate a 10x10 SVG with a specified hex color",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "svg",
+    "hex",
+    "color",
+    "generator",
+    "hex-color",
+    "svg-generator",
+    "color-swatch",
+    "image",
+    "graphics"
+  ],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/john2000stp/hex-to-svg.git"
+  },
+  "bugs": {
+    "url": "https://github.com/john2000stp/hex-to-svg/issues"
+  },
+  "homepage": "https://github.com/john2000stp/hex-to-svg#readme"
+}
