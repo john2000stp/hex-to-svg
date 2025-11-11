@@ -25,7 +25,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/john2000stp/hex-to-svg.git"
+    "url": "git+https://github.com/john2000stp/hex-to-svg.git"
   },
   "bugs": {
     "url": "https://github.com/john2000stp/hex-to-svg/issues"

@@ -16,14 +16,33 @@ A lightweight, zero-dependency npm package that generates 10x10 SVG images from 
 
 ## Installation
 
+This package is published to GitHub Packages.
+
 ```bash
-npm install hex-to-svg
+# Add .npmrc to your project
+echo "@john2000stp:registry=https://npm.pkg.github.com" >> .npmrc
+
+# Authenticate to GitHub Packages (requires GitHub token with read:packages scope)
+npm login --registry=https://npm.pkg.github.com
+
+# Install the package
+npm install @john2000stp/hex-to-svg
 ```
+
+### Quick Setup for GitHub Packages
+
+If you haven't used GitHub Packages before:
+
+1. Create a personal access token with `read:packages` scope at https://github.com/settings/tokens
+2. Run: `npm login --registry=https://npm.pkg.github.com`
+   - Username: Your GitHub username
+   - Password: Your personal access token
+   - Email: Your GitHub email
 
 ## Quick Start
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 
 const svg = hexToSvg('#FF5733');
 console.log(svg);
@@ -41,7 +60,7 @@ Output:
 ### Basic Usage
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 
 // With # prefix
 const svg1 = hexToSvg('#FF5733');
@@ -59,7 +78,7 @@ const svg4 = hexToSvg('#ff5733');
 ### Save to File
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 const fs = require('fs');
 
 const svg = hexToSvg('#FF5733');
@@ -70,7 +89,7 @@ fs.writeFileSync('my-color.svg', svg);
 
 ```javascript
 const express = require('express');
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 
 const app = express();
 
@@ -90,7 +109,7 @@ app.listen(3000);
 ### Generate Multiple SVGs
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 
 const colors = ['#FF5733', '#33FF57', '#3357FF', '#F0F', '#0FF'];
 const svgs = colors.map(color => ({
@@ -104,7 +123,7 @@ console.log(svgs);
 ### Error Handling
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 
 try {
   const svg = hexToSvg('GGGGGG'); // Invalid hex
@@ -117,7 +136,7 @@ try {
 ### TypeScript Usage
 
 ```typescript
-import hexToSvg = require('hex-to-svg');
+import hexToSvg = require('@john2000stp/hex-to-svg');
 
 const svg: string = hexToSvg('#FF5733');
 
@@ -137,7 +156,7 @@ function generateColorSvg(color: string): string {
 ### Dynamic Color Palette
 
 ```javascript
-const hexToSvg = require('hex-to-svg');
+const hexToSvg = require('@john2000stp/hex-to-svg');
 const fs = require('fs');
 
 const palette = {
